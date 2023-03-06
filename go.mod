@@ -1,3 +1,3 @@
-module github.com/oussama4/gopify
+module github.com/sempr/gopify
 
 go 1.18
