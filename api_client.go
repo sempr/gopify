@@ -108,7 +108,13 @@ func NewClient(domain, accessToken string, opts ...Option) *Client {
 }
 
 func (c *Client) newRequest(method string, path string, queryParams url.Values, requestBody any) (*http.Request, error) {
-	u, err := url.Parse(fmt.Sprintf("%s/%s", c.baseUrl, path))
+	var reqURL string
+	if path[0] == '/' {
+		reqURL = fmt.Sprintf("https://%s%s", c.domain, path)
+	} else {
+		reqURL = fmt.Sprintf("%s/%s", c.baseUrl, path)
+	}
+	u, err := url.Parse(reqURL)
 	if err != nil {
 		return nil, err
 	}
