@@ -88,6 +88,10 @@ func (pd *Payload) validateShop() error {
 // decodes the given session token and extracts the token payload from it
 func (g *Gopify) DecodeSessionToken(token string) (*Payload, error) {
 	parts := strings.Split(token, ".")
+	if len(parts) < 3 {
+		return nil, errors.New("token format error")
+	}
+
 	payload, err := base64.RawURLEncoding.DecodeString(parts[1])
 	if err != nil {
 		return nil, err
@@ -110,6 +114,9 @@ func (g *Gopify) DecodeSessionToken(token string) (*Payload, error) {
 // VerifySignature verifies the signature of the session token
 func (g *Gopify) VerifyTokenSignature(token string) error {
 	parts := strings.Split(token, ".")
+	if len(parts) < 3 {
+		return errors.New("token format error")
+	}
 	headerAndPayload := strings.Join(parts[:2], ".")
 	signature, err := base64.RawURLEncoding.DecodeString(parts[2])
 	if err != nil {
