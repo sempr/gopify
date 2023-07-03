@@ -300,7 +300,7 @@ func (c *Client) Get(path string, queryParams url.Values, responseBody any) (*Re
 
 // post performs a post request and returns the result
 func (c *Client) Post(path string, requestBody any, responseBody any) (*RestResponse, error) {
-	return c.rest(http.MethodPost, path, nil, requestBody, requestBody)
+	return c.rest(http.MethodPost, path, nil, requestBody, responseBody)
 }
 
 // Put performs a put request and returns the result
