@@ -178,14 +178,15 @@ func (c *Client) rest(method string, path string, queryParams url.Values, reques
 			time.Sleep(time.Second * 2)
 			continue
 		}
+		if err := json.NewDecoder(res.Body).Decode(&responseBody); err != nil {
+			return nil, err
+		}
+		restResponse := &RestResponse{
+			Headers: res.Header,
+		}
+		return restResponse, nil
 	}
-	if err := json.NewDecoder(res.Body).Decode(&responseBody); err != nil {
-		return nil, err
-	}
-	restResponse := &RestResponse{
-		Headers: res.Header,
-	}
-	return restResponse, nil
+	return nil, nil
 }
 
 func parseResponseError(res *http.Response) error {
