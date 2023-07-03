@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	defaultApiVersion = "2021-10"
+	defaultApiVersion = "2023-04"
 	defaultTimeout    = 10 * time.Second
 	defaultRetries    = 2
 )
