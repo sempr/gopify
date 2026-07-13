@@ -31,6 +31,7 @@ func (g *Gopify) AccessToken(shop string, code string) (string, error) {
 		"client_id":     g.ApiKey,
 		"client_secret": g.ApiSecret,
 		"code":          code,
+		"expiring":      "1",
 	})
 	if err != nil {
 		return "", nil
