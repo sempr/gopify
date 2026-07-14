@@ -9,6 +9,14 @@ import (
 	"strings"
 )
 
+type TokenResponse struct {
+	AccessToken              string `json:"access_token"`
+	ExpiresIn                int    `json:"expires_in"`
+	RefreshToken             string `json:"refresh_token"`
+	RefreshTokenExpiresIn    int    `json:"refresh_token_expires_in"`
+	Scope                    string `json:"scope"`
+}
+
 // AuthorizationUrl returns a URL to shopify's consent page that asks for permissions
 // for the required scopes.
 func (g *Gopify) AuthorizationUrl(shop string, state string) string {
@@ -43,10 +51,10 @@ func (g *Gopify) AccessToken(shop string, code string) (string, error) {
 	}
 	defer res.Body.Close()
 
-	resPayload := map[string]string{}
+	var resPayload TokenResponse
 	if err := json.NewDecoder(res.Body).Decode(&resPayload); err != nil {
 		return "", err
 	}
 
-	return resPayload["access_token"], nil
+	return resPayload.AccessToken, nil
 }
